@@ -7,8 +7,14 @@
 #include "GoliathHeroLinkedAnimLayer.generated.h"
 
 
+class UGoliathHeroAnimInstance;
+
 UCLASS()
 class GOLIATH_API UGoliathHeroLinkedAnimLayer : public UGoliathBaseAnimInstance
 {
 	GENERATED_BODY()
+	
+public:
+	UFUNCTION(BlueprintPure, meta = (BlueprintThreadSafe))
+	UGoliathHeroAnimInstance* GetHeroAnimInstance() const;
 };

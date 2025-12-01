@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
+#include "Components/Combat/HeroCombatComponent.h"
 #include "Components/Input/GoliathInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -36,6 +37,8 @@ AGoliathHeroCharacter::AGoliathHeroCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+	
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>("HeroCombatComp");
 }
 
 void AGoliathHeroCharacter::PossessedBy(AController* NewController)
@@ -66,6 +69,7 @@ void AGoliathHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	auto GoliathInputComponent = CastChecked<UGoliathInputComponent>(PlayerInputComponent);
 	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_Move);
 	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_Look);
+	GoliathInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &AGoliathHeroCharacter::Input_AbilityInputPressed, &AGoliathHeroCharacter::Input_AbilityInputReleased);
 }
 
 void AGoliathHeroCharacter::BeginPlay()
@@ -87,6 +91,16 @@ void AGoliathHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
 	if (LookAxisVector.X != 0.f) AddControllerYawInput(LookAxisVector.X);
 	if (LookAxisVector.Y != 0.f) AddControllerPitchInput(LookAxisVector.Y);
+}
+
+void AGoliathHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	GoliathAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AGoliathHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	GoliathAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }
 
 

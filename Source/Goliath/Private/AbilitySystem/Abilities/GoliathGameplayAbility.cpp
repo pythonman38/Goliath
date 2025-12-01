@@ -4,6 +4,7 @@
 #include "AbilitySystem/Abilities/GoliathGameplayAbility.h"
 
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
+#include "Components/Combat/PawnCombatComponent.h"
 
 void UGoliathGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
                                             const FGameplayAbilitySpec& Spec)
@@ -26,4 +27,14 @@ void UGoliathGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle
 	{
 		if (ActorInfo) ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
 	}
+}
+
+UPawnCombatComponent* UGoliathGameplayAbility::GetPawnCombatComponentFromActorInfo() const
+{
+	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+}
+
+UGoliathAbilitySystemComponent* UGoliathGameplayAbility::GetGoliathAbilitySystemComponentFromActorInfo() const
+{
+	return Cast<UGoliathAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
 }

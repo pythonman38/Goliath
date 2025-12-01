@@ -3,20 +3,12 @@
 
 #include "Items/Weapons/GoliathHeroWeapon.h"
 
-
-AGoliathHeroWeapon::AGoliathHeroWeapon()
+void AGoliathHeroWeapon::AssignGrantedAbilitySpecHandles(const TArray<FGameplayAbilitySpecHandle>& InSpecHandles)
 {
-	PrimaryActorTick.bCanEverTick = true;
+	GrantedAbilitySpecHandles = InSpecHandles;
 }
 
-void AGoliathHeroWeapon::BeginPlay()
+TArray<FGameplayAbilitySpecHandle> AGoliathHeroWeapon::GetGrantedAbilitySpecHandles() const
 {
-	Super::BeginPlay();
-	
+	return GrantedAbilitySpecHandles;
 }
-
-void AGoliathHeroWeapon::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-

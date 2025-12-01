@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GoliathBaseCharacter.h"
 #include "GoliathHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
 class UDataAsset_InputConfig;
 class UCameraComponent;
 class USpringArmComponent;
@@ -32,12 +34,22 @@ private:
 	
 	void Input_Look(const FInputActionValue& InputActionValue);
 	
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = true))
 	TObjectPtr<USpringArmComponent> CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = true))
 	TObjectPtr<UCameraComponent> FollowCamera;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = true))
+	TObjectPtr<UHeroCombatComponent> HeroCombatComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CharacterData, meta = (AllowPrivateAccess = true))
 	TObjectPtr<UDataAsset_InputConfig> InputConfigDataAsset;
+	
+public:
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 };
