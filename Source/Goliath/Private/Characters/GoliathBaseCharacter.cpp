@@ -23,6 +23,16 @@ UAbilitySystemComponent* AGoliathBaseCharacter::GetAbilitySystemComponent() cons
 	return GoliathAbilitySystemComponent;
 }
 
+UPawnCombatComponent* AGoliathBaseCharacter::GetPawnCombatComponent() const
+{
+	return nullptr;
+}
+
+UPawnUI_Component* AGoliathBaseCharacter::GetPawnUI_Component() const
+{
+	return nullptr;
+}
+
 void AGoliathBaseCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);

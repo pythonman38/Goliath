@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/Abilities/GoliathGameplayAbility.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
 #include "Components/Combat/PawnCombatComponent.h"
 
@@ -37,4 +38,20 @@ UPawnCombatComponent* UGoliathGameplayAbility::GetPawnCombatComponentFromActorIn
 UGoliathAbilitySystemComponent* UGoliathGameplayAbility::GetGoliathAbilitySystemComponentFromActorInfo() const
 {
 	return Cast<UGoliathAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+FActiveGameplayEffectHandle UGoliathGameplayAbility::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	auto TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	check(TargetASC && InSpecHandle.IsValid());
+	return GetGoliathAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+}
+
+FActiveGameplayEffectHandle UGoliathGameplayAbility::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle, EGoliathSuccessType& OutSuccessType)
+{
+	auto ActiveGameplayEffectHandle = NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
+	OutSuccessType = ActiveGameplayEffectHandle.WasSuccessfullyApplied() ? EGoliathSuccessType::Successful : EGoliathSuccessType::Failed;
+	return ActiveGameplayEffectHandle;
 }

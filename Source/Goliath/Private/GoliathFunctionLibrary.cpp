@@ -5,6 +5,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
+#include "Interfaces/PawnCombatInterface.h"
 
 UGoliathAbilitySystemComponent* UGoliathFunctionLibrary::NativeGetGoliathASCFromActor(AActor* InActor)
 {
@@ -35,4 +36,22 @@ void UGoliathFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag 
 	EGoliathConfirmType& OutConfirmType)
 {
 	OutConfirmType = NativeDoesActorHaveTag(InActor, TagToCheck) ? EGoliathConfirmType::Yes : EGoliathConfirmType::No;
+}
+
+UPawnCombatComponent* UGoliathFunctionLibrary::NativeGetPawnCombatComponentFromActor(AActor* InActor)
+{
+	check(InActor);
+	
+	if (auto PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	{
+		return PawnCombatInterface->GetPawnCombatComponent();
+	}
+	return nullptr;
+}
+
+UPawnCombatComponent* UGoliathFunctionLibrary::BP_GetPawnCombatComponentFromActor(AActor* InActor,
+	EGoliathValidType& OutValidType)
+{
+	OutValidType = NativeGetPawnCombatComponentFromActor(InActor) ? EGoliathValidType::Valid : EGoliathValidType::Invalid;
+	return NativeGetPawnCombatComponentFromActor(InActor);
 }

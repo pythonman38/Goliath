@@ -9,6 +9,7 @@
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
 #include "Components/Combat/HeroCombatComponent.h"
 #include "Components/Input/GoliathInputComponent.h"
+#include "Components/UI/HeroUI_Component.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameplayTags/GoliathGameplayTags.h"
@@ -39,6 +40,22 @@ AGoliathHeroCharacter::AGoliathHeroCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>("HeroCombatComp");
+	HeroUI_Component = CreateDefaultSubobject<UHeroUI_Component>("HeroUI_Comp");
+}
+
+UPawnCombatComponent* AGoliathHeroCharacter::GetPawnCombatComponent() const
+{
+	return HeroCombatComponent;
+}
+
+UPawnUI_Component* AGoliathHeroCharacter::GetPawnUI_Component() const
+{
+	return HeroUI_Component;
+}
+
+UHeroUI_Component* AGoliathHeroCharacter::GetHeroUI_Component() const
+{
+	return HeroUI_Component;
 }
 
 void AGoliathHeroCharacter::PossessedBy(AController* NewController)

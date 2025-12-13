@@ -26,6 +26,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Goliath|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
 	
+	UFUNCTION(BlueprintPure, Category = "Goliath|Ability")
+	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAtttackTypeTag, int32 InUsedComboCount);
+	
 private:
 	TWeakObjectPtr<AGoliathHeroCharacter> CachedGoliathHeroCharacter;
 	

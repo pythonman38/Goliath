@@ -9,6 +9,14 @@
 
 class AGoliathWeaponBase;
 
+UENUM(BlueprintType)
+enum class EToggleDamageType : uint8
+{
+	CurrentEquippedWeapon,
+	LeftHand,
+	RightHand
+};
+
 UCLASS()
 class GOLIATH_API UPawnCombatComponent : public UPawnExtensionComponentBase
 {
@@ -24,8 +32,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Goliath|Combat")
 	AGoliathWeaponBase* GetCharacterCurrentEquippedWeapon() const;
 	
+	UFUNCTION(BlueprintCallable, Category = "Goliath|Combat")
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
+	
+	virtual void OnHitTargetActor(AActor* HitActor);
+	
+	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor);
+	
 	UPROPERTY(BlueprintReadWrite, Category = "Goliath|Combat")
 	FGameplayTag CurrentEquippedWeaponTag;
+	
+protected:
+	TArray<AActor*> OverlappedActors;
 	
 private:
 	TMap<FGameplayTag, AGoliathWeaponBase*> CharacterCarriedWeaponMap;

@@ -13,6 +13,16 @@ void UDataAsset_StartupDataBase::GiveToAbilitySystemComponent(UGoliathAbilitySys
 	
 	GrantAbilities(ActivateOnGivenAbilities, InASCToGive, ApplyLevel);
 	GrantAbilities(ReactiveAbilities, InASCToGive, ApplyLevel);
+	
+	if (!StartupGameplayEffects.IsEmpty())
+	{
+		for (const auto& EffectClass : StartupGameplayEffects)
+		{
+			if (!EffectClass) continue;
+			auto EffectCDO = EffectClass->GetDefaultObject<UGameplayEffect>();
+			InASCToGive->ApplyGameplayEffectToSelf(EffectCDO, ApplyLevel, InASCToGive->MakeEffectContext());
+		}
+	}
 }
 
 void UDataAsset_StartupDataBase::GrantAbilities(const TArray<TSubclassOf<UGoliathGameplayAbility>>& InAbilitiesToGive,

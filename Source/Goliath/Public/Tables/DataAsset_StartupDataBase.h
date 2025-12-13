@@ -7,6 +7,7 @@
 #include "DataAsset_StartupDataBase.generated.h"
 
 
+class UGameplayEffect;
 class UGoliathAbilitySystemComponent;
 class UGoliathGameplayAbility;
 
@@ -26,4 +27,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = StartUpData)
 	TArray<TSubclassOf<UGoliathGameplayAbility>> ReactiveAbilities;
+	
+	UPROPERTY(EditDefaultsOnly, Category = StartUpData)
+	TArray<TSubclassOf<UGameplayEffect>> StartupGameplayEffects;
 };

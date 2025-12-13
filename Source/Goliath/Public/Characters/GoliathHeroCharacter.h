@@ -7,6 +7,7 @@
 #include "GoliathBaseCharacter.h"
 #include "GoliathHeroCharacter.generated.h"
 
+class UHeroUI_Component;
 class UHeroCombatComponent;
 class UDataAsset_InputConfig;
 class UCameraComponent;
@@ -21,6 +22,12 @@ class GOLIATH_API AGoliathHeroCharacter : public AGoliathBaseCharacter
 
 public:
 	AGoliathHeroCharacter();
+	
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	
+	virtual UPawnUI_Component* GetPawnUI_Component() const override;
+	
+	virtual UHeroUI_Component* GetHeroUI_Component() const override;
 
 protected:
 	virtual void PossessedBy(AController* NewController) override;
@@ -46,6 +53,9 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = true))
 	TObjectPtr<UHeroCombatComponent> HeroCombatComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI, meta = (AllowPrivateAccess = true))
+	TObjectPtr<UHeroUI_Component> HeroUI_Component;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CharacterData, meta = (AllowPrivateAccess = true))
 	TObjectPtr<UDataAsset_InputConfig> InputConfigDataAsset;

@@ -3,6 +3,7 @@
 
 #include "Components/Combat/PawnCombatComponent.h"
 
+#include "Components/BoxComponent.h"
 #include "Items/Weapons/GoliathWeaponBase.h"
 #include "Singletons/GoliathDebugHelper.h"
 
@@ -14,10 +15,9 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag inWeaponTagToRegis
 	check(InWeaponToRegister);
 	
 	CharacterCarriedWeaponMap.Emplace(inWeaponTagToRegister, InWeaponToRegister);
+	InWeaponToRegister->OnWeaponHitTarget.BindUObject(this, &UPawnCombatComponent::OnHitTargetActor);
+	InWeaponToRegister->OnWeaponPulledFromTarget.BindUObject(this, &UPawnCombatComponent::OnWeaponPulledFromTargetActor);
 	if (bRegisterAsEquippedWeapon) CurrentEquippedWeaponTag = inWeaponTagToRegister;
-	
-	const FString WeaponString = FString::Printf(TEXT("A weapon named: %s has been registered using the tag %s!"), *InWeaponToRegister->GetName(), *inWeaponTagToRegister.ToString());
-	Debug::Print(WeaponString);
 }
 
 AGoliathWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
@@ -34,4 +34,24 @@ AGoliathWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() co
 	if (!CurrentEquippedWeaponTag.IsValid()) return nullptr;
 	
 	return GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
+}
+
+void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+	{
+		auto WeaponToToggle = GetCharacterCurrentEquippedWeapon();
+		check(WeaponToToggle);
+		
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		if (!bShouldEnable) OverlappedActors.Empty();
+	}
+}
+
+void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor)
+{
+}
+
+void UPawnCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
+{
 }
