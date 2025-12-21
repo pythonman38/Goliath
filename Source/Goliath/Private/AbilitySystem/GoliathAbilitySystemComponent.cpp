@@ -3,7 +3,7 @@
 
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
 
-#include "AbilitySystem/Abilities/GoliathGameplayAbility.h"
+#include "AbilitySystem/Abilities/GoliathHeroGameplayAbility.h"
 
 void UGoliathAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
@@ -19,6 +19,7 @@ void UGoliathAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& I
 
 void UGoliathAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
+	
 }
 
 void UGoliathAbilitySystemComponent::GrantHeroWeaponAbilities(
@@ -48,4 +49,21 @@ void UGoliathAbilitySystemComponent::RemoveGrantedHeroWeaponAbilities(
 		if (SpecHandle.IsValid()) ClearAbility(SpecHandle);
 	}
 	InSpecHandlesToRemove.Empty();
+}
+
+bool UGoliathAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate)
+{
+	check(AbilityTagToActivate.IsValid());
+	
+	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
+	if (!FoundAbilitySpecs.IsEmpty())
+	{
+		const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+		auto SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
+		check(SpecToActivate);
+		
+		if (!SpecToActivate->IsActive()) return TryActivateAbility(SpecToActivate->Handle);
+	}
+	return false;
 }

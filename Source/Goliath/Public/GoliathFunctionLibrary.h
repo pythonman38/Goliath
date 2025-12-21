@@ -35,4 +35,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Goliath|FunctionLibrary", meta = (DisplayName = "Get Pawn Combat Component From Actor", ExpandEnumAsExecs = "OutValidType"))
 	static UPawnCombatComponent* BP_GetPawnCombatComponentFromActor(AActor* InActor, EGoliathValidType& OutValidType);
+	
+	UFUNCTION(BlueprintPure, Category = "Goliath|FunctionLibrary")
+	static bool IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn);
 };

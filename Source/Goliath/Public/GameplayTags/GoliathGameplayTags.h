@@ -44,6 +44,10 @@ namespace GoliathGameplayTags
 	/** Enemy Weapon Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon);
 	
+	/** Enemy Status Tags **/
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_Strafing);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_UnderAttack);
+	
 	/** Shared Ability Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_Death);

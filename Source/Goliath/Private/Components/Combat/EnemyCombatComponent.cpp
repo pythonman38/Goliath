@@ -3,34 +3,37 @@
 
 #include "Components/Combat/EnemyCombatComponent.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayTags/GoliathGameplayTags.h"
 
-// Sets default values for this component's properties
 UEnemyCombatComponent::UEnemyCombatComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-
-// Called when the game starts
-void UEnemyCombatComponent::BeginPlay()
+void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
-	Super::BeginPlay();
-
-	// ...
+	if (OverlappedActors.Contains(HitActor)) return;
 	
+	OverlappedActors.AddUnique(HitActor);
+	bool bIsValidBlock = false;
+	const bool bIsPlayerBlocking = false, bIsMyAttackUnblockable = false;
+	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
+	{
+		// TODO: check if the block is valid
+	}
+	FGameplayEventData EventData;
+	EventData.Instigator = GetOwningPawn();
+	EventData.Target = HitActor;
+	if (bIsValidBlock)
+	{
+		// TODO: Handle successful block
+	}
+	else
+	{
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GoliathGameplayTags::Shared_Event_MeleeHit, EventData);
+	}
 }
 
 
-// Called every frame
-void UEnemyCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                          FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
-}
 

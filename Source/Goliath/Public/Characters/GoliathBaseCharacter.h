@@ -12,6 +12,7 @@
 class UDataAsset_StartupDataBase;
 class UGoliathAttributeSet;
 class UGoliathAbilitySystemComponent;
+class UMotionWarpingComponent;
 
 UCLASS()
 class GOLIATH_API AGoliathBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public IPawnUI_Interface
@@ -38,6 +39,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AbilitySystem)
 	TObjectPtr<UGoliathAttributeSet> GoliathAttributeSet;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = MotionWarping)
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CharacterData)
 	TSoftObjectPtr<UDataAsset_StartupDataBase> CharacterStartupData;

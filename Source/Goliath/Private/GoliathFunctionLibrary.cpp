@@ -4,6 +4,7 @@
 #include "GoliathFunctionLibrary.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
 
@@ -54,4 +55,12 @@ UPawnCombatComponent* UGoliathFunctionLibrary::BP_GetPawnCombatComponentFromActo
 {
 	OutValidType = NativeGetPawnCombatComponentFromActor(InActor) ? EGoliathValidType::Valid : EGoliathValidType::Invalid;
 	return NativeGetPawnCombatComponentFromActor(InActor);
+}
+
+bool UGoliathFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+{
+	check(QueryPawn && TargetPawn);
+	auto QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
+	auto TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+	return QueryTeamAgent && TargetTeamAgent && QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
 }

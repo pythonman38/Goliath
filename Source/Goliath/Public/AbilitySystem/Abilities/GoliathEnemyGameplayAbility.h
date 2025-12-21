@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Goliath|Abilities")
 	UEnemyCombatComponent* GetEnemyCombatComponentFromActorInfo();
 	
+	UFUNCTION(BlueprintPure, Category = "Goliath|Abilities")
+	FGameplayEffectSpecHandle MakeEnemyDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, const FScalableFloat& InDamageScalableFloat);
+	
 private:
 	TWeakObjectPtr<AGoliathEnemyCharacter> CachedGoliathEnemyCharacter;
 };

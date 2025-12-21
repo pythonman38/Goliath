@@ -3,6 +3,7 @@
 
 #include "Items/Weapons/GoliathWeaponBase.h"
 
+#include "GoliathFunctionLibrary.h"
 #include "Components/BoxComponent.h"
 
 
@@ -29,7 +30,7 @@ void AGoliathWeaponBase::OnCollisionBoxBeginOverlap(UPrimitiveComponent* Overlap
 	
 	if (auto HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UGoliathFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
@@ -44,7 +45,7 @@ void AGoliathWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* Overlappe
 	
 	if (auto HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UGoliathFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
 		}

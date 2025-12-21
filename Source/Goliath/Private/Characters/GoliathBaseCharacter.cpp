@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
 #include "AbilitySystem/GoliathAttributeSet.h"
+#include "MotionWarpingComponent.h"
 
 
 AGoliathBaseCharacter::AGoliathBaseCharacter()
@@ -16,6 +17,7 @@ AGoliathBaseCharacter::AGoliathBaseCharacter()
 	
 	GoliathAbilitySystemComponent = CreateDefaultSubobject<UGoliathAbilitySystemComponent>("AbilitySystemComp");
 	GoliathAttributeSet = CreateDefaultSubobject<UGoliathAttributeSet>("AttributeSet");
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>("MotionWarpingComp");
 }
 
 UAbilitySystemComponent* AGoliathBaseCharacter::GetAbilitySystemComponent() const

@@ -3,6 +3,7 @@
 
 #include "AnimInstances/GoliathCharacterAnimInstance.h"
 
+#include "KismetAnimationLibrary.h"
 #include "Characters/GoliathBaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -18,4 +19,5 @@ void UGoliathCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaS
 
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
 	bHasAcceleration = OwningMovementComponent->GetCurrentAcceleration().SizeSquared2D() > 0.f;
+	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 }
