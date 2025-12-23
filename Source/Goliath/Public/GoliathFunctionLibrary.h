@@ -9,6 +9,7 @@
 #include "GoliathFunctionLibrary.generated.h"
 
 
+struct FScalableFloat;
 class UPawnCombatComponent;
 class UGoliathAbilitySystemComponent;
 
@@ -38,4 +39,7 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Goliath|FunctionLibrary")
 	static bool IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn);
+	
+	UFUNCTION(BlueprintPure, Category = "Goliath|FunctionLibrary", meta = (CompactNodeTitle = "Get Value At Level"))
+	static float GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel = 1.f);
 };

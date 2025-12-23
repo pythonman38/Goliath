@@ -14,6 +14,7 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_UnequipAxe);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_LightAttack_Axe);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_HeavyAttack_Axe);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Roll);
 	
 	/** Player Ability Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe);
@@ -21,6 +22,7 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Light_Axe);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Heavy_Axe);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_HitPause);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Roll);
 	
 	/** Player Weapon Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
@@ -32,6 +34,7 @@ namespace GoliathGameplayTags
 	
 	/** Player Status Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rolling);
 	
 	/** Player SetByCaller Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Light);

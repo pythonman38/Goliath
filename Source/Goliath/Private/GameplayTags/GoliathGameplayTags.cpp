@@ -12,6 +12,7 @@ namespace GoliathGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnequipAxe, "InputTag.UnequipAxe");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_LightAttack_Axe, "InputTag.LightAttack.Axe");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Axe, "InputTag.HeavyAttack.Axe");
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Roll, "InputTag.Roll");
 	
 	/** Player Ability Tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Axe, "Player.Ability.Equip.Axe");
@@ -19,6 +20,7 @@ namespace GoliathGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Light_Axe, "Player.Ability.Attack.Light.Axe");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Heavy_Axe, "Player.Ability.Attack.Heavy.Axe");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_HitPause, "Player.Ability.HitPause");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Roll, "Player.Ability.Roll");
 	
 	/** Player Weapon Tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe, "Player.Weapon.Axe");
@@ -30,6 +32,7 @@ namespace GoliathGameplayTags
 	
 	/** Player Status Tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rolling, "Player.Status.Rolling");
 	
 	/** Player SetByCaller Tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackType_Light, "Player.SetByCaller.AttackType.Light");

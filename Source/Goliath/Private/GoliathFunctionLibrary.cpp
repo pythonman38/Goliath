@@ -64,3 +64,8 @@ bool UGoliathFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Targe
 	auto TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
 	return QueryTeamAgent && TargetTeamAgent && QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
 }
+
+float UGoliathFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
+}
