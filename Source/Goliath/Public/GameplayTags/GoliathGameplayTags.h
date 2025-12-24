@@ -64,5 +64,9 @@ namespace GoliathGameplayTags
 	
 	/** Shared Status Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Dead);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Front);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Left);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Right);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Back);
 	
 }
