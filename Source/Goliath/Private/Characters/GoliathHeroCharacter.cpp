@@ -3,6 +3,7 @@
 
 #include "Characters/GoliathHeroCharacter.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -86,6 +87,8 @@ void AGoliathHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	auto GoliathInputComponent = CastChecked<UGoliathInputComponent>(PlayerInputComponent);
 	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_Move);
 	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_Look);
+	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_SwitchTargetTriggered);
+	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &AGoliathHeroCharacter::Input_SwitchTargetCompleted);
 	GoliathInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &AGoliathHeroCharacter::Input_AbilityInputPressed, &AGoliathHeroCharacter::Input_AbilityInputReleased);
 }
 
@@ -108,6 +111,18 @@ void AGoliathHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
 	if (LookAxisVector.X != 0.f) AddControllerYawInput(LookAxisVector.X);
 	if (LookAxisVector.Y != 0.f) AddControllerPitchInput(LookAxisVector.Y);
+}
+
+void AGoliathHeroCharacter::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
+{
+	SwitchDirection = InputActionValue.Get<FVector2D>();
+}
+
+void AGoliathHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
+{
+	FGameplayEventData Data;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, SwitchDirection.X > 0.f ? GoliathGameplayTags::Player_Event_SwitchTarget_Right : 
+		GoliathGameplayTags::Player_Event_SwitchTarget_Left, Data);
 }
 
 void AGoliathHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)

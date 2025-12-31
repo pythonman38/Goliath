@@ -6,7 +6,9 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
+#include "GameplayTags/GoliathGameplayTags.h"
 #include "Interfaces/PawnCombatInterface.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UGoliathAbilitySystemComponent* UGoliathFunctionLibrary::NativeGetGoliathASCFromActor(AActor* InActor)
 {
@@ -63,4 +65,35 @@ bool UGoliathFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Targe
 	auto QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
 	auto TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
 	return QueryTeamAgent && TargetTeamAgent && QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
+}
+
+float UGoliathFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
+FGameplayTag UGoliathFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InVictum,
+	float& OutAngleDifference)
+{
+	check(InAttacker && InVictum);
+	
+	const FVector VictumForward = InVictum->GetActorForwardVector(), 
+		VictimToAttackerNormalized = (InAttacker->GetActorLocation() - InVictum->GetActorLocation()).GetSafeNormal();
+	const float DotResult = FVector::DotProduct(VictumForward, VictimToAttackerNormalized);
+	OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
+	const FVector CrossResult = FVector::CrossProduct(VictumForward, VictimToAttackerNormalized);
+	if (CrossResult.Z < 0.f) OutAngleDifference *= -1.f;
+	if (OutAngleDifference >= -45.f && OutAngleDifference <= 45.f) return GoliathGameplayTags::Shared_Status_HitReact_Front;
+	if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f) return GoliathGameplayTags::Shared_Status_HitReact_Left;
+	if (OutAngleDifference < -135.f || OutAngleDifference > 135.f) return GoliathGameplayTags::Shared_Status_HitReact_Back;
+	if (OutAngleDifference > 45.f && OutAngleDifference <= 135.f) return GoliathGameplayTags::Shared_Status_HitReact_Right;
+	return GoliathGameplayTags::Shared_Status_HitReact_Front;
+}
+
+bool UGoliathFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefender)
+{
+	check(InAttacker && InDefender);
+	
+	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
+	return DotResult < -0.1f;
 }

@@ -52,8 +52,6 @@ void UGoliathAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 	{
 		const float OldHealth = GetCurrentHealth(), DamageDone = GetDamageTaken(), NewCurrentHealth = FMath::Clamp(OldHealth - DamageDone, 0.f, GetMaxHealth());
 		SetCurrentHealth(NewCurrentHealth);
-		const FString DebugString = FString::Printf(TEXT("Old Health: %f, Damage Done: %f, New Health: %f"), OldHealth, DamageDone, NewCurrentHealth);
-		Debug::Print(DebugString, FColor::Green);
 		PawnUI_Component->OnCurrentHealthChanged.Broadcast(GetCurrentHealth() / GetMaxHealth());
 		if (GetCurrentHealth() == 0.f)
 		{

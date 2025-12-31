@@ -4,6 +4,7 @@
 #include "AbilitySystem/GoliathAbilitySystemComponent.h"
 
 #include "AbilitySystem/Abilities/GoliathHeroGameplayAbility.h"
+#include "GameplayTags/GoliathGameplayTags.h"
 
 void UGoliathAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
@@ -13,13 +14,26 @@ void UGoliathAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& I
 	{
 		if (!AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag)) continue;
 		
-		TryActivateAbility(AbilitySpec.Handle);
+		if (InInputTag.MatchesTag(GoliathGameplayTags::InputTag_Toggleable))
+		{
+			if (AbilitySpec.IsActive()) CancelAbilityHandle(AbilitySpec.Handle);
+			else TryActivateAbility(AbilitySpec.Handle);
+		}
+		else TryActivateAbility(AbilitySpec.Handle);
 	}
 }
 
 void UGoliathAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(GoliathGameplayTags::InputTag_MustBeHeld)) return;
 	
+	for (const auto& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
 }
 
 void UGoliathAbilitySystemComponent::GrantHeroWeaponAbilities(

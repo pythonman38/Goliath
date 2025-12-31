@@ -4,6 +4,7 @@
 #include "Components/Combat/EnemyCombatComponent.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GoliathFunctionLibrary.h"
 #include "GameplayTags/GoliathGameplayTags.h"
 
 UEnemyCombatComponent::UEnemyCombatComponent()
@@ -16,17 +17,18 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	
 	OverlappedActors.AddUnique(HitActor);
 	bool bIsValidBlock = false;
-	const bool bIsPlayerBlocking = false, bIsMyAttackUnblockable = false;
+	const bool bIsPlayerBlocking = UGoliathFunctionLibrary::NativeDoesActorHaveTag(HitActor, GoliathGameplayTags::Player_Status_Blocking), 
+		bIsMyAttackUnblockable = false;
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
 	{
-		// TODO: check if the block is valid
+		bIsValidBlock = UGoliathFunctionLibrary::IsValidBlock(GetOwningPawn(), HitActor);
 	}
 	FGameplayEventData EventData;
 	EventData.Instigator = GetOwningPawn();
 	EventData.Target = HitActor;
 	if (bIsValidBlock)
 	{
-		// TODO: Handle successful block
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor, GoliathGameplayTags::Player_Event_SuccessfulBlock, EventData);
 	}
 	else
 	{
