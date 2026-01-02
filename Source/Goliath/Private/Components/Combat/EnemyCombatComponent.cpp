@@ -18,7 +18,7 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	OverlappedActors.AddUnique(HitActor);
 	bool bIsValidBlock = false;
 	const bool bIsPlayerBlocking = UGoliathFunctionLibrary::NativeDoesActorHaveTag(HitActor, GoliathGameplayTags::Player_Status_Blocking), 
-		bIsMyAttackUnblockable = false;
+		bIsMyAttackUnblockable = UGoliathFunctionLibrary::NativeDoesActorHaveTag(GetOwningPawn(), GoliathGameplayTags::Enemy_Status_Unblockable);
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
 	{
 		bIsValidBlock = UGoliathFunctionLibrary::IsValidBlock(GetOwningPawn(), HitActor);
@@ -26,14 +26,8 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	FGameplayEventData EventData;
 	EventData.Instigator = GetOwningPawn();
 	EventData.Target = HitActor;
-	if (bIsValidBlock)
-	{
-		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor, GoliathGameplayTags::Player_Event_SuccessfulBlock, EventData);
-	}
-	else
-	{
-		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GoliathGameplayTags::Shared_Event_MeleeHit, EventData);
-	}
+	if (bIsValidBlock) UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor, GoliathGameplayTags::Player_Event_SuccessfulBlock, EventData);
+	else UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GoliathGameplayTags::Shared_Event_MeleeHit, EventData);
 }
 
 

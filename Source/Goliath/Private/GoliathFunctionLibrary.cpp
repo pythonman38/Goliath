@@ -97,3 +97,11 @@ bool UGoliathFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefende
 	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
 	return DotResult < -0.1f;
 }
+
+bool UGoliathFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	auto SourceASC = NativeGetGoliathASCFromActor(InInstigator);
+	auto TargetASC = NativeGetGoliathASCFromActor(InTargetActor);
+	auto ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}

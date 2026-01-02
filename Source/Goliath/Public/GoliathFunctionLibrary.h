@@ -48,4 +48,7 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Goliath|FunctionLibrary")
 	static bool IsValidBlock(AActor* InAttacker, AActor* InDefender);
+	
+	UFUNCTION(BlueprintCallable, Category = "Goliath|FunctionLibrary")
+	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
 };

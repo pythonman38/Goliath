@@ -62,6 +62,7 @@ namespace GoliathGameplayTags
 	/** Enemy Status Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_Strafing);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_UnderAttack);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_Unblockable);
 	
 	/** Shared Ability Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact);
@@ -70,6 +71,7 @@ namespace GoliathGameplayTags
 	/** Shared Event Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_MeleeHit);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_SpawnProjectile);
 	
 	/** Shared SetByCaller Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_BaseDamage);
