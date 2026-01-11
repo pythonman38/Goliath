@@ -43,8 +43,14 @@ public:
 	FGameplayTag CurrentEquippedWeaponTag;
 	
 protected:
+	virtual void ToggleCurrentEquippedWeaponCollision(bool bShouldEnable);
+	
+	virtual void ToggleBodyCollisionBoxCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType);
+	
+	UPROPERTY()
 	TArray<AActor*> OverlappedActors;
 	
 private:
+	UPROPERTY()
 	TMap<FGameplayTag, AGoliathWeaponBase*> CharacterCarriedWeaponMap;
 };

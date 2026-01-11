@@ -3,34 +3,21 @@
 
 #include "Components/UI/EnemyUI_Component.h"
 
+#include "Widgets/GoliathWidgetBase.h"
 
-// Sets default values for this component's properties
-UEnemyUI_Component::UEnemyUI_Component()
+
+void UEnemyUI_Component::RegisterEnemyDrawnWidget(UGoliathWidgetBase* InWidgetToRegister)
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	EnemyDrawnWidgets.Add(InWidgetToRegister);
 }
 
-
-// Called when the game starts
-void UEnemyUI_Component::BeginPlay()
+void UEnemyUI_Component::RemoveEnemyDrawnWidgetsIfAny()
 {
-	Super::BeginPlay();
-
-	// ...
+	if (EnemyDrawnWidgets.IsEmpty()) return;
 	
+	for (auto DrawnWidget : EnemyDrawnWidgets)
+	{
+		if (DrawnWidget) DrawnWidget->RemoveFromParent();
+	}
+	EnemyDrawnWidgets.Empty();
 }
-
-
-// Called every frame
-void UEnemyUI_Component::TickComponent(float DeltaTime, ELevelTick TickType,
-                                       FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-

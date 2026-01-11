@@ -55,9 +55,13 @@ namespace GoliathGameplayTags
 	/** Enemy Ability Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Ranged);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_SummonEnemies);
 	
 	/** Enemy Weapon Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon);
+	
+	/** Enemy Event Tags **/
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Event_SummonEnemies);
 	
 	/** Enemy Status Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_Strafing);
@@ -82,5 +86,4 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Left);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Right);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Back);
-	
 }

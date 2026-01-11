@@ -11,7 +11,7 @@ public class Goliath : ModuleRules
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "GameplayTags", "GameplayTasks", 
-			"GameplayAbilities", "UMG", "AIModule", "AnimGraphRuntime", "MotionWarping", "Niagara"
+			"GameplayAbilities", "UMG", "AIModule", "AnimGraphRuntime", "MotionWarping", "Niagara", "NavigationSystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

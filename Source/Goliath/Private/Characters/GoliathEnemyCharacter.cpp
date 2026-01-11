@@ -3,6 +3,8 @@
 
 #include "Characters/GoliathEnemyCharacter.h"
 
+#include "GoliathFunctionLibrary.h"
+#include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "Components/UI/EnemyUI_Component.h"
@@ -29,6 +31,16 @@ AGoliathEnemyCharacter::AGoliathEnemyCharacter()
 	EnemyUI_Component = CreateDefaultSubobject<UEnemyUI_Component>("EnemyUI_Comp");
 	EnemyHealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("EnemyHealthWidgetComp");
 	EnemyHealthWidgetComponent->SetupAttachment(GetMesh());
+	
+	LeftHandCollisionBox = CreateDefaultSubobject<UBoxComponent>("LeftHandCollisionBox");
+	LeftHandCollisionBox->SetupAttachment(GetMesh());
+	LeftHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	LeftHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &AGoliathEnemyCharacter::OnBodyCollisionBoxBeginOverlap);
+	
+	RightHandCollisionBox = CreateDefaultSubobject<UBoxComponent>("RightHandCollisionBox");
+	RightHandCollisionBox->SetupAttachment(GetMesh());
+	RightHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RightHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &AGoliathEnemyCharacter::OnBodyCollisionBoxBeginOverlap);
 }
 
 UPawnCombatComponent* AGoliathEnemyCharacter::GetPawnCombatComponent() const
@@ -60,6 +72,33 @@ void AGoliathEnemyCharacter::BeginPlay()
 	if (auto HealthWidget = Cast<UGoliathWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject()))
 	{
 		HealthWidget->InitEnemyCreatedWidget(this);
+	}
+}
+
+#if WITH_EDITOR
+void AGoliathEnemyCharacter::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+	
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftHandCollisionBoxAttachBoneName))
+	{
+		LeftHandCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, LeftHandCollisionBoxAttachBoneName);
+	}
+	
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightHandCollisionBoxAttachBoneName))
+	{
+		RightHandCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, RightHandCollisionBoxAttachBoneName);
+	}
+}
+#endif
+
+
+void AGoliathEnemyCharacter::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+                                                            UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (auto HitPawn = Cast<APawn>(OtherActor))
+	{
+		if (UGoliathFunctionLibrary::IsTargetPawnHostile(this, HitPawn)) EnemyCombatComponent->OnHitTargetActor(HitPawn);
 	}
 }
 
