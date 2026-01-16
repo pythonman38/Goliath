@@ -67,10 +67,7 @@ void AGoliathHeroCharacter::PossessedBy(AController* NewController)
 	{
 		if (!CharacterStartupData.IsNull())
 		{
-			if (auto LoadedData = CharacterStartupData.LoadSynchronous())
-			{
-				LoadedData->GiveToAbilitySystemComponent(GoliathAbilitySystemComponent);
-			}
+			if (auto LoadedData = CharacterStartupData.LoadSynchronous()) LoadedData->GiveToAbilitySystemComponent(GoliathAbilitySystemComponent);
 		}
 	}
 }
@@ -85,11 +82,11 @@ void AGoliathHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	check(Subsystem);
 	Subsystem->AddMappingContext(InputConfigDataAsset->DefaultMappingContext, 0);
 	auto GoliathInputComponent = CastChecked<UGoliathInputComponent>(PlayerInputComponent);
-	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_Move);
-	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_Look);
-	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &AGoliathHeroCharacter::Input_SwitchTargetTriggered);
-	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &AGoliathHeroCharacter::Input_SwitchTargetCompleted);
-	GoliathInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &AGoliathHeroCharacter::Input_AbilityInputPressed, &AGoliathHeroCharacter::Input_AbilityInputReleased);
+	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
+	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
+	GoliathInputComponent->BindNativeInputAction(InputConfigDataAsset, GoliathGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+	GoliathInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
 void AGoliathHeroCharacter::BeginPlay()

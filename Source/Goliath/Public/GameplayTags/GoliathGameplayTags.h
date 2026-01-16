@@ -20,6 +20,7 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld_Block);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_TargetLock);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_Rage);
 	
 	/** Player Ability Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe);
@@ -30,6 +31,7 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Roll);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Block);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_TargetLock);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Rage);
 	
 	/** Player Weapon Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
@@ -41,12 +43,17 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SuccessfulBlock);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SwitchTarget_Left);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SwitchTarget_Right);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_ActivateRage);
 	
 	/** Player Status Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rolling);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Blocking);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_TargetLock);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rage_Activating);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rage_Active);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rage_Full);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rage_None);
 	
 	/** Player SetByCaller Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Light);
@@ -86,4 +93,5 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Left);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Right);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Back);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Invincible);
 }

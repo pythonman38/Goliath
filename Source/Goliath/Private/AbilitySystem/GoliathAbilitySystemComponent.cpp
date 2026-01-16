@@ -14,11 +14,7 @@ void UGoliathAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& I
 	{
 		if (!AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag)) continue;
 		
-		if (InInputTag.MatchesTag(GoliathGameplayTags::InputTag_Toggleable))
-		{
-			if (AbilitySpec.IsActive()) CancelAbilityHandle(AbilitySpec.Handle);
-			else TryActivateAbility(AbilitySpec.Handle);
-		}
+		if (InInputTag.MatchesTag(GoliathGameplayTags::InputTag_Toggleable) && AbilitySpec.IsActive()) CancelAbilityHandle(AbilitySpec.Handle);
 		else TryActivateAbility(AbilitySpec.Handle);
 	}
 }

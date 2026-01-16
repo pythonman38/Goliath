@@ -42,6 +42,20 @@ void UGoliathAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 	{
 		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(), 0.f, GetMaxRage());
 		SetCurrentRage(NewCurrentRage);
+		if (GetCurrentRage() == GetMaxRage())
+		{
+			UGoliathFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), GoliathGameplayTags::Player_Status_Rage_Full);
+		}
+		else if (GetCurrentRage() == 0.f)
+		{
+			UGoliathFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), GoliathGameplayTags::Player_Status_Rage_None);
+		}
+		else
+		{
+			UGoliathFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), GoliathGameplayTags::Player_Status_Rage_Full);
+			UGoliathFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), GoliathGameplayTags::Player_Status_Rage_None);
+		}
+		
 		if (auto HeroUI_Component = CachedPawnUI_Interface->GetHeroUI_Component())
 		{
 			HeroUI_Component->OnCurrentRageChanged.Broadcast(GetCurrentRage() / GetMaxRage());
