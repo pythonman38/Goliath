@@ -21,6 +21,8 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_TargetLock);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_Rage);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_SpecialWeaponAbility_Light);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_SpecialWeaponAbility_Heavy);
 	
 	/** Player Ability Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe);
@@ -32,6 +34,12 @@ namespace GoliathGameplayTags
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Block);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_TargetLock);
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Rage);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_SpecialWeaponAbility_Light);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_SpecialWeaponAbility_Heavy);
+	
+	/** Player Cooldown Tags **/
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Cooldown_SpecialWeaponAbility_Light);
+	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Cooldown_SpecialWeaponAbility_Heavy);
 	
 	/** Player Weapon Tags **/
 	GOLIATH_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);

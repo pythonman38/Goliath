@@ -25,6 +25,18 @@ struct FGoliathHeroAbilitySet
 	bool IsValid() const;
 };
 
+USTRUCT(Blueprintable)
+struct FGoliathHeroSpecialAbilitySet : public FGoliathHeroAbilitySet
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UMaterialInterface> SoftAbilityIconMaterial;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "Player.Cooldown"))
+	FGameplayTag AbilityCooldownTag;
+};
+
 USTRUCT(BlueprintType)
 struct FGoliathHeroWeaponData
 {
@@ -38,6 +50,9 @@ struct FGoliathHeroWeaponData
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = InputTag))
 	TArray<FGoliathHeroAbilitySet> DefaultWeaponAbilities;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = InputTag))
+	TArray<FGoliathHeroSpecialAbilitySet> SpecialWeaponAbilities;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;

@@ -9,6 +9,7 @@
 #include "GameplayTags/GoliathGameplayTags.h"
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Types/GoliathCountDownAction.h"
 
 UGoliathAbilitySystemComponent* UGoliathFunctionLibrary::NativeGetGoliathASCFromActor(AActor* InActor)
 {
@@ -104,4 +105,21 @@ bool UGoliathFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor*
 	auto TargetASC = NativeGetGoliathASCFromActor(InTargetActor);
 	auto ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}
+
+void UGoliathFunctionLibrary::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval,
+	float& OutRemainingTime, EGoliathCountDownActionInput CountDownInput,
+	UPARAM(DisplayName = "Output") EGoliathCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo)
+{
+	UWorld* World = nullptr;
+	if (GEngine) World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	if (!World) return;
+	auto& LatentActionManager = World->GetLatentActionManager();
+	auto FoundAction = LatentActionManager.FindExistingAction<FGoliathCountDownAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+	if (CountDownInput == EGoliathCountDownActionInput::Start && !FoundAction)
+	{
+		LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, 
+			new FGoliathCountDownAction(TotalTime, UpdateInterval, OutRemainingTime, CountDownOutput, LatentInfo));
+	}
+	if (CountDownInput == EGoliathCountDownActionInput::Cancel && FoundAction) FoundAction->CancelAction();
 }

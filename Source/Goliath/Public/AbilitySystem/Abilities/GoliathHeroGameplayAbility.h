@@ -29,6 +29,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Goliath|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAtttackTypeTag, int32 InUsedComboCount);
 	
+	UFUNCTION(BlueprintCallable, Category = "Goliath|Ability")
+	bool GetAbilityRemainingCoolDownByTag(FGameplayTag InCoolDownTag, float& TotalCoolDownTime, float& RemainingCoolDownTime);
+	
 private:
 	TWeakObjectPtr<AGoliathHeroCharacter> CachedGoliathHeroCharacter;
 	

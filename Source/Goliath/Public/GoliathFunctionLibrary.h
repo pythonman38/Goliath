@@ -9,6 +9,7 @@
 #include "GoliathFunctionLibrary.generated.h"
 
 
+struct FGameplayEffectSpecHandle;
 struct FScalableFloat;
 class UPawnCombatComponent;
 class UGoliathAbilitySystemComponent;
@@ -51,4 +52,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Goliath|FunctionLibrary")
 	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+	
+	UFUNCTION(BlueprintCallable, Category = "Goliath|FunctionLibrary", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", 
+		ExpandEnumAsExecs = "CountDownInput|CountDownOutput", TotalTime = "1.0", UpdateInterval = "0.1"))
+	static void CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime, 
+		EGoliathCountDownActionInput CountDownInput, UPARAM(DisplayName = "Output") EGoliathCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo);
 };

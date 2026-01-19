@@ -22,3 +22,18 @@ enum class EGoliathSuccessType : uint8
 	Successful,
 	Failed
 };
+
+UENUM()
+enum class EGoliathCountDownActionInput : uint8
+{
+	Start,
+	Cancel
+};
+
+UENUM()
+enum class EGoliathCountDownActionOutput : uint8
+{
+	Updated,
+	Completed,
+	Cancelled
+};

@@ -19,7 +19,8 @@ public:
 	void OnAbilityInputReleased(const FGameplayTag& InInputTag);
 	
 	UFUNCTION(BlueprintCallable, Category = "Goliath|Ability", meta = (ApplyLevel = "1"))
-	void GrantHeroWeaponAbilities(const TArray<FGoliathHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
+	void GrantHeroWeaponAbilities(const TArray<FGoliathHeroAbilitySet>& InDefaultWeaponAbilities, const TArray<FGoliathHeroSpecialAbilitySet>& InSpecialWeaponAbilities, int32 ApplyLevel, 
+		TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
 	
 	UFUNCTION(BlueprintCallable, Category = "Goliath|Ability")
 	void RemoveGrantedHeroWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
